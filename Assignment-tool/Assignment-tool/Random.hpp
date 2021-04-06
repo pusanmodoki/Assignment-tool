@@ -13,6 +13,7 @@ public:
 	{
 		return m_distribution(m_device);
 	}
+	inline std::mt19937& Device() { return m_device; }
 
 private:
 	std::mt19937 m_device;

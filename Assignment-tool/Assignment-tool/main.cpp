@@ -138,6 +138,17 @@ int main()
 	//ランダムデバイス作成
 	Random random(groupMap.size() - 1);
 	//割当ループ
+	//まずは最低各一人ずつ配置
+	for (auto& group : groupMap)
+	{
+		if (group.second.memberNames.size() > 0 || memberNames.size() == 0) continue;
+
+		std::uniform_int_distribution<std::size_t> distribution(0, memberNames.size() - 1);
+		std::size_t randomValue = distribution(random.Device());
+		group.second.memberNames.emplace_back(memberNames[randomValue]);
+		memberNames.erase(memberNames.begin() + randomValue);
+	}
+	//余り配置
 	for (auto& member : memberNames)
 	{
 		std::size_t randomValue;
@@ -160,6 +171,8 @@ int main()
 		std::wcout << std::endl;
 	}
 
+
+	std::wcout << L"\n\n Press enter..." << std::flush;
 	std::rewind(stdin);
 	std::getchar();
 
